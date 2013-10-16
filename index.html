@@ -6,17 +6,24 @@
 <script>
 $(document).ready(function() {
     // Number of non-silhouette images that we want to retrieve.
-    var want = 100;
+    var want = 0;
     var count = 0;
     var colorThief = new ColorThief();
     var img = document.getElementById('do');
     $("#do").on("load", function() {
-        console.log(img.src);
-        console.log(colorThief.getColor(img));
+        var imgSrc = img.src;
+        var imgDomColorRGB = colorThief.getColor(img);
+        var imgDomColorHex = rgbToHex(imgDomColorRGB);
         count++;
+        appendImage(imgSrc);
+        appendColor(imgDomColorHex);
+        console.log(imgSrc);
+        console.log(imgDomColorRGB);
+        console.log(imgDomColorHex);
         console.log(count);
     });
     $("#do3").click(function() {
+        want = $("#want").val();
         // Facebook profiles start at 1.
         getImgData(1);
     });
@@ -29,8 +36,8 @@ $(document).ready(function() {
             type: "GET",
         }).done(function(response) { 
             processImgData(response);
-            // Wait until the response is recieved before sending another AJAX request.
-            // Otherwise, count will be less than expected.
+            // Wait until a response is recieved before sending another AJAX request.
+            // Otherwise, the variable count will be less than expected.
             getImgData(++i); 
         }); 
     }
@@ -40,7 +47,26 @@ $(document).ready(function() {
             $("#do").attr("src", imgUrl);
         }
     }
+    function appendImage(imgUrl) {
+        $("#blank").after('<img style="float:left" src="' + imgUrl + '">');
+    }
+    function appendColor(colorHex) {
+        $("#blank").after('<div style="float:left;height:50px;width:50px;background-color:' + colorHex + '"></div>');
+    }
+    function componentToHex(c) {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+    }
+    function rgbToHex(rgb) {
+        var r = rgb[0];
+        var g = rgb[1];
+        var b = rgb[2];
+        return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    }
 });
+</script>
+<script>
+
 </script>
 <!--
 <script>
@@ -75,7 +101,19 @@ $(document).ready(function() {
 -->
 </head>
 <body>
+Image we want to create a mosaic in:
+<img id="source" src="img/fb.png" crossOrigin="">
+<br>
+<br>
+<br>
+<br>
+<!-- This image is to allow cross origin requests to be made. Will be display: none in
+the future. -->
 <img id="do" src="" crossOrigin="">
-<button id="do3">do3</button>
+<br>
+Load <input id="want" type="text"> non-silhouette profile pictures.
+<button id="do3">Go!</button>
+<br>
+<div id="blank"></div>
 </body>
 </html>
