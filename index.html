@@ -14,12 +14,14 @@ $(document).ready(function() {
         var imgSrc = img.src;
         var imgDomColorRGB = colorThief.getColor(img);
         var imgDomColorHex = rgbToHex(imgDomColorRGB);
+        var imgDomColorHSL = rgbToHSL(imgDomColorRGB);
         count++;
         appendImage(imgSrc);
         appendColor(imgDomColorHex);
         console.log(imgSrc);
         console.log(imgDomColorRGB);
         console.log(imgDomColorHex);
+        console.log(imgDomColorHSL);
         console.log(count);
     });
     $("#do3").click(function() {
@@ -62,6 +64,32 @@ $(document).ready(function() {
         var g = rgb[1];
         var b = rgb[2];
         return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    }
+    function rgbToHSL(rgb) {
+        var var_R = ( rgb[0] / 255 );
+        var var_G = ( rgb[1] / 255 );
+        var var_B = ( rgb[2] / 255 );
+
+        var var_Min = Math.min( var_R, var_G, var_B );
+        var var_Max = Math.max( var_R, var_G, var_B );
+        var del_Max = var_Max - var_Min;
+
+        var H = 0;
+        var S = 0;        
+        var L = ( var_Max + var_Min ) / 2
+
+        if (var_Max == var_R) {
+            H = 60 * (((var_G - var_B) / del_Max) % 6);
+        } else if (var_Max == var_G) {
+            H = 60 * (((var_B - var_R) / del_Max) + 2);
+        } else if (var_Max == var_B) {
+            H = 60 * (((var_R - var_G) / del_Max) + 4);
+        }
+        
+        if (del_Max != 0) {
+            S = del_Max / (1 - Math.abs(2*L - 1))
+        }
+        return [H, S*100, L*100];
     }
 });
 </script>

@@ -20,8 +20,8 @@ $(document).ready(function() {
     }
     function getPixelColors(canvas) {
         var count = 0;
-        for (var x = 0; x < canvas.width; x++) {
-            for (var y = 0; y < canvas.height; y++) {
+        for (var x = 0; x < canvas.width; x = x + 3) {
+            for (var y = 0; y < canvas.height; y = y + 3) {
                 var pixelData = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
                 var rgb = [pixelData[0], pixelData[1], pixelData[2]];
                 console.log(rgb);
@@ -37,5 +37,7 @@ Image we want to create a mosaic in:
 <img id="source" src="img/fb.png" crossOrigin="">
 <br>
 <canvas id="canvasSource"></canvas>
+<br>
+<div id="blank"></div>
 </body>
 </html>
