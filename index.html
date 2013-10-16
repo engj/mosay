@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="js/color-thief.js"></script>
+<script>
+$(document).ready(function() {
+    // Number of non-silhouette images that we want to retrieve.
+    var want = 100;
+    var count = 0;
+    var colorThief = new ColorThief();
+    var img = document.getElementById('do');
+    $("#do").on("load", function() {
+        console.log(img.src);
+        console.log(colorThief.getColor(img));
+        count++;
+        console.log(count);
+    });
+    $("#do3").click(function() {
+        // Facebook profiles start at 1.
+        getImgData(1);
+    });
+    function getImgData(i) {
+        if (count >= want - 1) { 
+            return;
+        } 
+        $.ajax({
+            url: "http://graph.facebook.com/" + i + "/picture?redirect=false",
+            type: "GET",
+        }).done(function(response) { 
+            processImgData(response);
+            // Wait until the response is recieved before sending another AJAX request.
+            // Otherwise, count will be less than expected.
+            getImgData(++i); 
+        }); 
+    }
+    function processImgData(data) {
+        if (data.data.is_silhouette == false) {
+            var imgUrl = data.data.url;
+            $("#do").attr("src", imgUrl);
+        }
+    }
+});
+</script>
+<!--
+<script>
+$(document).ready(function() {
+    var count = 0;
+    var colorThief = new ColorThief();
+    var img = document.getElementById('do');
+    $("#do").on("load", function() {
+        console.log(colorThief.getColor(img));
+        count++;
+        console.log(count);
+    });
+    $("#do3").click(function() {
+        for (var i = 1; i < 300; i++) {
+            getImgData(i);
+        }
+    });
+    function getImgData(i) {
+        $.ajax({
+            url: "http://graph.facebook.com/" + i + "/picture?redirect=false",
+            type: "GET",
+        }).always(function(response) {
+            processImgData(response);
+        });
+    }
+    function processImgData(data) {
+        var imgUrl = data.data.url;
+        $("#do").attr("src", imgUrl);
+    }
+});
+</script>
+-->
+</head>
+<body>
+<img id="do" src="" crossOrigin="">
+<button id="do3">do3</button>
+</body>
+</html>
