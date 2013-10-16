@@ -15,13 +15,17 @@ $(document).ready(function() {
         var imgDomColorRGB = colorThief.getColor(img);
         var imgDomColorHex = rgbToHex(imgDomColorRGB);
         var imgDomColorHSL = rgbToHSL(imgDomColorRGB);
+        var imgDomColorModulus = colorModulus(imgDomColorHSL);
+
         count++;
         appendImage(imgSrc);
         appendColor(imgDomColorHex);
+
         console.log(imgSrc);
         console.log(imgDomColorRGB);
         console.log(imgDomColorHex);
         console.log(imgDomColorHSL);
+        console.log(imgDomColorModulus);
         console.log(count);
     });
     $("#do3").click(function() {
@@ -66,9 +70,13 @@ $(document).ready(function() {
         return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
     }
     function rgbToHSL(rgb) {
-        var var_R = ( rgb[0] / 255 );
-        var var_G = ( rgb[1] / 255 );
-        var var_B = ( rgb[2] / 255 );
+        var r = rgb[0];
+        var g = rgb[1];
+        var b = rgb[2];
+
+        var var_R = ( r / 255 );
+        var var_G = ( g / 255 );
+        var var_B = ( b / 255 );
 
         var var_Min = Math.min( var_R, var_G, var_B );
         var var_Max = Math.max( var_R, var_G, var_B );
@@ -90,6 +98,17 @@ $(document).ready(function() {
             S = del_Max / (1 - Math.abs(2*L - 1))
         }
         return [H, S*100, L*100];
+    }
+    function colorModulus(colorHSL) {
+        var H = colorHSL[0];
+        var S = colorHSL[1];
+        var L = colorHSL[2];
+
+        var a = 1;
+        var b = 1;
+        var c = 1;
+
+        return Math.sqrt( (a*H*H) + (b*S*S) + (c*L*L) );
     }
 });
 </script>
