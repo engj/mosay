@@ -86,12 +86,14 @@ $(document).ready(function() {
         var S = 0;        
         var L = ( var_Max + var_Min ) / 2
 
-        if (var_Max == var_R) {
-            H = 60 * (((var_G - var_B) / del_Max) % 6);
-        } else if (var_Max == var_G) {
-            H = 60 * (((var_B - var_R) / del_Max) + 2);
-        } else if (var_Max == var_B) {
-            H = 60 * (((var_R - var_G) / del_Max) + 4);
+        if (del_Max != 0) {
+            if (var_Max == var_R) {
+                H = 60 * (((var_G - var_B) / del_Max) % 6);
+            } else if (var_Max == var_G) {
+                H = 60 * (((var_B - var_R) / del_Max) + 2);
+            } else if (var_Max == var_B) {
+                H = 60 * (((var_R - var_G) / del_Max) + 4);
+            }
         }
         
         if (del_Max != 0) {
