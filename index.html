@@ -16,7 +16,7 @@ $(document).ready(function() {
         var imgDomColorHex = rgbToHex(imgDomColorRGB);
         var imgDomColorHSL = rgbToHSL(imgDomColorRGB);
         var imgDomColorModulus = colorModulus(imgDomColorHSL);
-
+        
         count++;
         appendImage(imgSrc);
         appendColor(imgDomColorHex, count);
@@ -25,7 +25,7 @@ $(document).ready(function() {
         console.log(imgDomColorRGB);
         console.log(imgDomColorHex);
         console.log(imgDomColorHSL);
-        console.log(imgDomColorModulus);
+        console.log(Math.floor(imgDomColorModulus));
         console.log("*" + count + "*");
     });
     $("#do3").click(function() {
@@ -110,49 +110,14 @@ $(document).ready(function() {
         var a = 0.5;
         var b = 0.5;
         var c = 1;
-        // 98 & 94
 
         return Math.sqrt( (a*H*H) + (b*S*S) + (c*L*L) );
     }
 });
 </script>
-<script>
-
-</script>
-<!--
-<script>
-$(document).ready(function() {
-    var count = 0;
-    var colorThief = new ColorThief();
-    var img = document.getElementById('do');
-    $("#do").on("load", function() {
-        console.log(colorThief.getColor(img));
-        count++;
-        console.log(count);
-    });
-    $("#do3").click(function() {
-        for (var i = 1; i < 300; i++) {
-            getImgData(i);
-        }
-    });
-    function getImgData(i) {
-        $.ajax({
-            url: "http://graph.facebook.com/" + i + "/picture?redirect=false",
-            type: "GET",
-        }).always(function(response) {
-            processImgData(response);
-        });
-    }
-    function processImgData(data) {
-        var imgUrl = data.data.url;
-        $("#do").attr("src", imgUrl);
-    }
-});
-</script>
--->
 </head>
 <body>
-Image we want to create a mosaic in:
+Image we want to create a mosaic of:
 <img id="source" src="img/fb.png" crossOrigin="">
 <br>
 <br>
