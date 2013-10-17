@@ -15,17 +15,25 @@ $(document).ready(function() {
         var imgDomColorRGB = colorThief.getColor(img);
         var imgDomColorHex = rgbToHex(imgDomColorRGB);
         var imgDomColorHSL = rgbToHSL(imgDomColorRGB);
-        var imgDomColorModulus = colorModulus(imgDomColorHSL);
+        var imgDomColorModulus = Math.floor(colorModulus(imgDomColorHSL));
         
         count++;
         appendImage(imgSrc);
         appendColor(imgDomColorHex, count);
+        /*
+        $.ajax({
+            url: "/putImg",
+            type: "POST",
+            data: {"url": imgSrc,
+                   "modulus": imgDomColorModulus}
+        });
+        */
 
         console.log(imgSrc);
         console.log(imgDomColorRGB);
         console.log(imgDomColorHex);
         console.log(imgDomColorHSL);
-        console.log(Math.floor(imgDomColorModulus));
+        console.log(imgDomColorModulus);
         console.log("*" + count + "*");
     });
     $("#do3").click(function() {

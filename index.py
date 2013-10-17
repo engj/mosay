@@ -6,11 +6,17 @@ import logging
 
 class MainPage(webapp.RequestHandler):
   def get(self):
-    picture = Picture(url="http://www.google.com/", modulus=32)
-    picture.put()
     template_values={}
     path=os.path.join(os.path.dirname(__file__),'index.html')
     self.response.out.write(template.render(path,template_values))
+
+class putImg(webapp.RequestHandler):
+    def post(self):
+        #imgUrl = self.request.get("url")
+        #imgModulus = int(self.request.get("modulus"))
+        #picture = Picture(url = imgUrl, modulus = imgModulus)
+        #picture.put()
+        return None
 
 class Mosay(ndb.Model):
     currentIndex = ndb.IntegerProperty()
@@ -21,7 +27,8 @@ class Picture(ndb.Model):
 
 
 application=webapp.WSGIApplication(
-                                    [('/', MainPage)],
+                                    [('/', MainPage),
+                                     ('/putImg', putImg)],
                                     debug=False)
                                     
 def main():
