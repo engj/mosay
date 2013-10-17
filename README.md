@@ -1,7 +1,7 @@
 mosay
 =====
 
-Mosaic generator with Facebook profile pictures.
+Mosaic generator with Facebook profile pictures. Work in progress.
 
 mosaygenerator.appspot.com
 
