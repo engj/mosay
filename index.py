@@ -1,8 +1,8 @@
+import os
+import logging
 from google.appengine.ext import webapp, ndb
 from google.appengine.ext.webapp.util import run_wsgi_app
-import os
 from google.appengine.ext.webapp import template
-import logging
 
 class MainPage(webapp.RequestHandler):
   def get(self):
@@ -12,12 +12,11 @@ class MainPage(webapp.RequestHandler):
 
 class putImg(webapp.RequestHandler):
     def post(self):
-        #imgUrl = self.request.get("url")
-        #imgModulus = int(self.request.get("modulus"))
-        #picture = Picture(url = imgUrl, modulus = imgModulus)
-        #picture.put()
+        imgUrl = self.request.get("url")
+        imgModulus = int(self.request.get("modulus"))
+        picture = Picture(url = imgUrl, modulus = imgModulus)
+        picture.put()
         return None
-
 
 application=webapp.WSGIApplication(
                                     [('/', MainPage),
