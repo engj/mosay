@@ -18,13 +18,6 @@ class putImg(webapp.RequestHandler):
         #picture.put()
         return None
 
-class Mosay(ndb.Model):
-    currentIndex = ndb.IntegerProperty()
-
-class Picture(ndb.Model):
-    url = ndb.StringProperty()
-    modulus = ndb.IntegerProperty()
-
 
 application=webapp.WSGIApplication(
                                     [('/', MainPage),
