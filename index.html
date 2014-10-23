@@ -5,7 +5,6 @@
 <script src="js/color-thief.js"></script>
 <script>
 $(document).ready(function() {
-    // Number of non-silhouette images that we want to retrieve.
     var want = 0;
     var count = 0;
     var colorThief = new ColorThief();
@@ -20,14 +19,6 @@ $(document).ready(function() {
         count++;
         appendImage(imgSrc);
         appendColor(imgDomColorHex, count);
-        /*
-        $.ajax({
-            url: "/putImg",
-            type: "POST",
-            data: {"url": imgSrc,
-                   "modulus": imgDomColorModulus}
-        });
-        */
 
         console.log(imgSrc);
         console.log(imgDomColorRGB);
@@ -50,9 +41,6 @@ $(document).ready(function() {
             type: "GET",
         }).done(function(response) { 
             processImgData(response);
-            // Wait until a response is recieved before sending another 
-            // AJAX request. Otherwise, the variable count will be less 
-            // than expected.
             getImgData(++i); 
         }); 
     }
@@ -83,17 +71,17 @@ $(document).ready(function() {
         var g = rgb[1];
         var b = rgb[2];
 
-        var var_R = ( r / 255 );
-        var var_G = ( g / 255 );
-        var var_B = ( b / 255 );
+        var var_R = (r/255);
+        var var_G = (g/255);
+        var var_B = (b/255);
 
-        var var_Min = Math.min( var_R, var_G, var_B );
-        var var_Max = Math.max( var_R, var_G, var_B );
+        var var_Min = Math.min(var_R, var_G, var_B);
+        var var_Max = Math.max(var_R, var_G, var_B);
         var del_Max = var_Max - var_Min;
 
         var H = 0;
         var S = 0;        
-        var L = ( var_Max + var_Min ) / 2
+        var L = (var_Max + var_Min) / 2
 
         if (del_Max != 0) {
             if (var_Max == var_R) {
@@ -131,8 +119,6 @@ Image we want to create a mosaic of:
 <br>
 <br>
 <br>
-<!-- This image is to allow cross origin requests to be made. Will be display: none in
-the future. -->
 <img id="do" src="" crossOrigin="">
 <br>
 Load <input id="want" type="text"> non-silhouette profile pictures.
